@@ -1,0 +1,29 @@
+
+> hawkeye-brand-protection@1.0.0 dev
+> nodemon src/server.js
+
+[33m[nodemon] 3.1.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node src/server.js`[39m
+(node:78437) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 uncaughtException listeners added to [process]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:78437) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 unhandledRejection listeners added to [process]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:78437) [MONGODB DRIVER] Warning: useNewUrlParser is a deprecated option: useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+(node:78437) [MONGODB DRIVER] Warning: useUnifiedTopology is a deprecated option: useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version
+[32minfo[39m: MongoDB Connected: localhost {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.330Z"}
+[32minfo[39m: Connected to MongoDB {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.333Z"}
+[32minfo[39m: Redis Client Connected {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.338Z"}
+[32minfo[39m: Redis Client Ready {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.340Z"}
+[32minfo[39m: Connected to Redis {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.341Z"}
+[32minfo[39m: Starting monitoring services... {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.341Z"}
+[32minfo[39m: Domain monitoring scheduled every 6 hours {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.343Z"}
+[32minfo[39m: Dark web monitoring scheduled every 2 hours {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.344Z"}
+[32minfo[39m: Social media monitoring scheduled every 1 hours {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.344Z"}
+[32minfo[39m: Pastebin monitoring scheduled every 30 minutes {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.344Z"}
+[32minfo[39m: Password store monitoring scheduled every 30 minutes {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.345Z"}
+[32minfo[39m: Alert processing scheduled every 5 minutes {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.345Z"}
+[32minfo[39m: All monitoring services started successfully {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.345Z"}
+[32minfo[39m: Monitoring services started {"service":"hawkeye-brand-protection","timestamp":"2025-06-30T18:37:07.345Z"}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m

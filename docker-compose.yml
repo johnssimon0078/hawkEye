@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: hawkeye-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: hawkeye123
+      MONGO_INITDB_DATABASE: hawkeye_brand_protection
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - hawkeye-network
+
+  # Redis Cache
+  redis:
+    image: redis:7.2-alpine
+    container_name: hawkeye-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - hawkeye-network
+
+  # HawkEye Application
+  hawkeye-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hawkeye-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://admin:hawkeye123@mongodb:27017/hawkeye_brand_protection?authSource=admin
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=hawkeye-super-secret-jwt-key-change-this-in-production
+      - JWT_EXPIRES_IN=24h
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=your-email@gmail.com
+      - SMTP_PASS=your-app-password
+      - SMTP_FROM=noreply@hawkeye.com
+      - VIRUSTOTAL_API_KEY=your-virustotal-api-key
+      - SHODAN_API_KEY=your-shodan-api-key
+      - CENSYS_API_ID=your-censys-api-id
+      - CENSYS_API_SECRET=your-censys-api-secret
+      - TWITTER_BEARER_TOKEN=your-twitter-bearer-token
+      - LINKEDIN_CLIENT_ID=your-linkedin-client-id
+      - LINKEDIN_CLIENT_SECRET=your-linkedin-client-secret
+      - SCAN_INTERVAL_MINUTES=30
+      - DARK_WEB_SCAN_INTERVAL_HOURS=2
+      - SOCIAL_MEDIA_SCAN_INTERVAL_HOURS=1
+      - DOMAIN_MONITORING_INTERVAL_HOURS=6
+      - ALERT_EMAIL_ENABLED=true
+      - ALERT_SLACK_WEBHOOK_URL=your-slack-webhook-url
+      - ALERT_DISCORD_WEBHOOK_URL=your-discord-webhook-url
+      - RATE_LIMIT_WINDOW_MS=900000
+      - RATE_LIMIT_MAX_REQUESTS=100
+      - BCRYPT_ROUNDS=12
+      - MAX_FILE_SIZE=10485760
+      - UPLOAD_PATH=./uploads
+      - LOG_LEVEL=info
+      - LOG_FILE=./logs/hawkeye.log
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - hawkeye-network
+
+  # Nginx Reverse Proxy (Optional)
+  nginx:
+    image: nginx:alpine
+    container_name: hawkeye-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - hawkeye-app
+    networks:
+      - hawkeye-network
+
+volumes:
+  mongodb_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  hawkeye-network:
+    driver: bridge 
