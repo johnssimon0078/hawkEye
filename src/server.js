@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
+const fs = require('fs');
 const logger = require('./config/logger');
 
 // Load environment variables
@@ -71,7 +72,7 @@ function createServerInstance() {
   const server = createServer(app);
   const io = new Server(server, {
     cors: {
-      origin: process.env.FRONTEND_URL || "http://localhost:3000",
+      origin: process.env.BASE_URL || "http://localhost:3000",
       methods: ["GET", "POST"]
     }
   });
@@ -81,7 +82,7 @@ function createServerInstance() {
     contentSecurityPolicy: false // Disable CSP for development
   }));
   app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: process.env.BASE_URL || "http://localhost:3000",
     credentials: true
   }));
   app.use(compression());
@@ -102,17 +103,28 @@ function createServerInstance() {
     });
   });
 
-  // Dashboard route
+  // Helper function to inject API base URL
+  const injectApiBase = (filePath) => {
+    let html = fs.readFileSync(filePath, 'utf8');
+    const apiBase = `'${process.env.BASE_URL || 'http://localhost:3000'}/api'`;
+    html = html.replace('window.location.origin + \'/api\'', apiBase);
+    return html;
+  };
+
+  // Dashboard route with dynamic API base URL injection
   app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    const html = injectApiBase(path.join(__dirname, 'public', 'index.html'));
+    res.send(html);
   });
 
   app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    const html = injectApiBase(path.join(__dirname, 'public', 'index.html'));
+    res.send(html);
   });
 
   app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+    const html = injectApiBase(path.join(__dirname, 'public', 'register.html'));
+    res.send(html);
   });
 
   // API Routes

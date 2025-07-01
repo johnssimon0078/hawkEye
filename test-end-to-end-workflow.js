@@ -4,6 +4,7 @@ require('dotenv').config();
 
 // Configuration
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+console.log(`🌐 Using BASE_URL: ${BASE_URL}`);
 const TEST_USER = {
   firstName: 'Test',
   lastName: 'User',

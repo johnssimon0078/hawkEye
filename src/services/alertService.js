@@ -279,7 +279,7 @@ class AlertService {
             <p>Please review this alert and take appropriate action if necessary.</p>
             
             <p style="text-align: center;">
-              <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/alerts/${alert._id}" class="button">
+                              <a href="${process.env.BASE_URL || 'http://localhost:3000'}/alerts/${alert._id}" class="button">
                 View Alert Details
               </a>
             </p>
@@ -331,7 +331,7 @@ class AlertService {
             {
               type: 'button',
               text: 'View Details',
-              url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/alerts/${alert._id}`
+              url: `${process.env.BASE_URL || 'http://localhost:3000'}/alerts/${alert._id}`
             }
           ],
           footer: 'HawkEye Brand Protection Platform'
@@ -371,7 +371,7 @@ class AlertService {
               inline: true
             }
           ],
-          url: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/alerts/${alert._id}`,
+          url: `${process.env.BASE_URL || 'http://localhost:3000'}/alerts/${alert._id}`,
           footer: {
             text: 'HawkEye Brand Protection Platform'
           },

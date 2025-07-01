@@ -618,7 +618,7 @@
 
     <script>
         let authToken = localStorage.getItem('hawkeye_token');
-        const API_BASE = 'http://localhost:3000/api';
+        const API_BASE = window.location.origin + '/api';
 
         // Check if already logged in
         if (authToken) {
