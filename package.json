@@ -8,7 +8,13 @@
     "dev": "nodemon src/server.js",
     "test": "jest",
     "lint": "eslint src/",
-    "migrate": "node src/database/migrate.js"
+    "migrate": "node src/database/migrate.js",
+    "config": "node configure-environment.js",
+    "config:dev": "node configure-environment.js",
+    "config:prod": "node configure-environment.js",
+    "setup:telegram": "node setup-telegram-bot.js",
+    "test:e2e": "node test-end-to-end-workflow.js",
+    "test:production": "node test-production-alert-processing.js"
   },
   "keywords": [
     "brand-protection",
